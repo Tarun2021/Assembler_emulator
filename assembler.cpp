@@ -47,12 +47,10 @@ bool verify_hexadecimal(string str)
     for (int y = 0; y < str.size(); y++)
     {
         if ((str[y] < '0' || str[y] > '9') && (str[y] < 'a' || str[y] > 'f'))
-        {
-            //cout << "not hex" << endl;
+        {            
             return false;
         }
-    }
-    //cout << " a hex" << endl;
+    }    
     return true;
 }
 bool verify_number(string str)
@@ -60,12 +58,10 @@ bool verify_number(string str)
     for (int y = 0; y < str.size(); y++)
     {
         if (!isdigit(str[y]))
-        {
-            //cout << "not integer" << endl;
+        {            
             return false;
         }
-    }
-    //cout << " an integer" << endl;
+    }    
     return true;
 }
 bool verify_octal(string str)
@@ -74,11 +70,9 @@ bool verify_octal(string str)
     {
         if (str[y] < '0' || str[y] > '7')
         {
-            //cout << "not octal" << endl;
             return false;
         }
-    }
-    //cout << "its octal" << endl;
+    }    
     return true;
 }
 string verify_operand_number(string str)
@@ -209,12 +203,7 @@ int main(int argc, char **argv)
                 {
                     newfile[d].pop_back();
                 }
-            }
-
-            if (newfile[d].back() == ' ')
-            {
-                //cout << "space present here" << endl;
-            }
+            }          
             
                 program_table.push_back(make_pair(program_counter,newfile[d]));
             program_counter++;
@@ -226,18 +215,13 @@ int main(int argc, char **argv)
         if (find(iter->second.begin(), iter->second.end(), ':') != iter->second.end())
         {
             int diff = find(iter->second.begin(), iter->second.end(), ':') - iter->second.begin();
-            if(symbol_table.find(iter->second.substr(0, diff))!=symbol_table.end()){
-                //cout<<"duplicate labels"<<iter->first<<endl;
+            if(symbol_table.find(iter->second.substr(0, diff))!=symbol_table.end()){                
                 error_lines.push_back("error 1: duplicate labels");
                 error_file<<"duplicate labels"<<' '<<iter->first<<'\n';
-                
-
-
             }
             symbol_table[iter->second.substr(0, diff)] = iter->first;
             
-        }
-        
+        }       
             
         }
     
@@ -246,8 +230,7 @@ int main(int argc, char **argv)
         for(auto string_iter: iter->second)
         {
             if(string_iter==',')
-            {
-                //cout<<"more than one operand not allowed/comma not allowed "<<iter->first<<endl;
+            {               
                 error_lines.push_back("more than one operand not allowed/comma not allowed ");
                 error_file<<"more than one operand not allowed/comma not allowed "<<' '<<iter->first<<'\n';
             }
@@ -337,7 +320,6 @@ int main(int argc, char **argv)
             if((final_inst_set[iter->first].second.first == "brz" || final_inst_set[iter->first].second.first == "brlz" || final_inst_set[iter->first].second.first == "br" || final_inst_set[iter->first].second.first == "call")&&
                 symbol_table.find(final_inst_set[iter->first].second.second)==symbol_table.end())
             {
-                //cout<<"no such label existent; error at line "<<iter->first<<endl;
                 error_lines.push_back("no such label existent");
                 error_file<<"no such label existent; error at line "<<iter->first<<'\n';
             }
@@ -346,23 +328,18 @@ int main(int argc, char **argv)
                 final_inst_set[iter->first].second.first == "br" || final_inst_set[iter->first].second.first == "call")&&
                 symbol_table.find(final_inst_set[iter->first].second.second)!=symbol_table.end())||((final_inst_set[iter->first].second.first == "ldc"||final_inst_set[iter->first].second.first == "adj"||final_inst_set[iter->first].second.first == "adc")&&
                 (symbol_table.find(final_inst_set[iter->first].second.second)!=symbol_table.end())&&(final_inst_set[symbol_table[final_inst_set[iter->first].second.second]].second.first=="data"||final_inst_set[symbol_table[final_inst_set[iter->first].second.second]].second.first=="SET"))){continue;}
-                //cout<<"else what?"<<iter->first<<endl;
+                
                 if((final_inst_set[iter->first].second.first == "add"||final_inst_set[iter->first].second.first == "sub" ||final_inst_set[iter->first].second.first == "shl"||final_inst_set[iter->first].second.first == "shr"||final_inst_set[iter->first].second.first == "a2sp"||final_inst_set[iter->first].second.first == "sp2a"||final_inst_set[iter->first].second.first == "return"||final_inst_set[iter->first].second.first == "HALT"))
                 {
-                    //cout<<"error at line present: "<<iter->first<<endl;
-                    //cout<<"operand present associated with those mneumonic instructions which has no operand in syntax"<<endl;
                     error_lines.push_back("operand present associated with those mneumonic instructions which has no operand in syntax");
                     error_file<<"operand present associated with those mneumonic instructions which has no operand in syntax at line "<<' '<<iter->first<<'\n';
-                }
-            //cout<<"invalid operand entered"<<iter->first<<endl;
+                }            
             error_lines.push_back("invalid operand entered");
             error_file<<"invalid operand entered at line"<<' '<<iter->first<<'\n';}}
             else{
-                //cout<<"else what?"<<iter->first<<endl;
+                
                 if((final_inst_set[iter->first].second.first == "add"||final_inst_set[iter->first].second.first == "sub" ||final_inst_set[iter->first].second.first == "shl"||final_inst_set[iter->first].second.first == "shr"||final_inst_set[iter->first].second.first == "a2sp"||final_inst_set[iter->first].second.first == "sp2a"||final_inst_set[iter->first].second.first == "return"||final_inst_set[iter->first].second.first == "HALT"))
                 {
-                    //cout<<"error at line present: "<<iter->first<<endl;
-                    //cout<<"operand present associated with those mneumonic instructions which has no operand in syntax"<<endl;
                     error_lines.push_back("operand present associated with those mneumonic instructions which has no operand in syntax");
                     error_file<<"operand present associated with those mneumonic instructions which has no operand in syntax at line "<<iter->first<<'\n';
                 }
@@ -371,14 +348,12 @@ int main(int argc, char **argv)
         else{
             if((mneumonic_table.find(final_inst_set[iter->first].second.first)!=mneumonic_table.end())&&(!(final_inst_set[iter->first].second.first == "add"||final_inst_set[iter->first].second.first == "sub" ||final_inst_set[iter->first].second.first == "shl"||final_inst_set[iter->first].second.first == "shr"||final_inst_set[iter->first].second.first == "a2sp"||final_inst_set[iter->first].second.first == "sp2a"||final_inst_set[iter->first].second.first == "return"||final_inst_set[iter->first].second.first == "HALT")))
                 
-                {
-                    //cout<<"empty operand "<<iter->first<<endl;
+                {                    
                     error_lines.push_back("empty operand");
                     error_file<<"empty operand at line "<<iter->first<<'\n';
                 }
         }
         if(final_inst_set[iter->first].second.first.size()!=0&&mneumonic_table.find(final_inst_set[iter->first].second.first)==mneumonic_table.end()){
-            //cout<<"invalid mneumonic entered"<<iter->first<<endl;
             error_lines.push_back("invalid mneumonic entered");
             error_file<<"invalid mneumonic entered at line "<<iter->first<<'\n';
         }
@@ -393,19 +368,14 @@ int main(int argc, char **argv)
     int pccounter = 0;
     vector<string> list_file;
     cout << "list file size: " << list_file.size() << "\n";
-    // cout<<" final attempt"<<endl;
+    
     ofstream objfilewrite;
     objfilewrite.open(filename.substr(0, filename.size() - 4) + ".o", ios::binary | ios::out);
     for (auto iter = final_inst_set.begin(); iter != final_inst_set.end(); iter++)
     {
        
         
-        string listfilestring = "";
-        // cout<<iter->first<<" index "<<endl;
-        if (final_inst_set[iter->first].second.second[final_inst_set[iter->first].second.second.size() - 1] == ' ')
-        {
-            // cout<<"space present"<<endl;
-        }
+        string listfilestring = "";        
         listfilestring += int_to_hex_string(iter->first, 8);
         listfilestring += ' ';
 
@@ -413,8 +383,7 @@ int main(int argc, char **argv)
         string impstring="";
 
         if (final_inst_set[iter->first].second.second.size() != 0)
-        {
-            // cout<<mneumonic_table[final_instruction_set[iter->first].first]<<endl;
+        {            
             if (verify_operand_number(final_inst_set[iter->first].second.second) == "hex")
             {
                 impstring+=int_to_hex_string((int)stoi(final_inst_set[iter->first].second.second, nullptr, 16), 6);
@@ -502,33 +471,15 @@ int main(int argc, char **argv)
 
     for (auto iter : list_file)
     {
-        listfileobj << (iter + '\n');
-        //cout << "added" << endl;
+        listfileobj << (iter + '\n');        
         cout << iter << endl;
     }
-    listfileobj.close();
-   
-    
-    
+    listfileobj.close();    
     if(!error_lines.size()){error_file<<"No errors detected"<<'\n';}
     
     objfilewrite.close();
     error_file.close();
     cout<<"listing file, log file, and object file created and content written"<<endl;
-    
-    
-
-
-   // objfileread.read(filename.substr(0, filename.size() - 4)+".o");
-
-
-
-
-
-    
-
-
-
     filetest1.close();
 
     return 0;
